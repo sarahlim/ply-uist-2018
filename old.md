@@ -158,7 +158,6 @@ screenshot from Ply w/ code reduction
 </div>
 :::
 
-<!--  -->
 ::: {.column width="60%"}
 
 ```css

@@ -1,80 +1,46 @@
-/*
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+.tomorrow-comment, pre .comment, pre .title {
+  color: #8e908c;
+}
 
-Zenburn style from voldmar.ru (c) Vladimir Epifanov <voldmar@voldmar.ru>
-based on dark.css by Ivan Sagalaev
+.tomorrow-red, pre .variable, pre .attribute, pre .tag, pre .regexp, pre .ruby .constant, pre .xml .tag .title, pre .xml .pi, pre .xml .doctype, pre .html .doctype, pre .css .id, pre .css .class, pre .css .pseudo {
+  color: #c82829;
+}
 
-*/
+.tomorrow-orange, pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
+  color: #f5871f;
+}
 
-.hljs {
+.tomorrow-yellow, pre .class, pre .ruby .class .title, pre .css .rules .attribute {
+  color: #eab700;
+}
+
+.tomorrow-green, pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
+  color: #718c00;
+}
+
+.tomorrow-aqua, pre .css .hexcolor {
+  color: #3e999f;
+}
+
+.tomorrow-blue, pre .function, pre .python .decorator, pre .python .title, pre .ruby .function .title, pre .ruby .title .keyword, pre .perl .sub, pre .javascript .title, pre .coffeescript .title {
+  color: #4271ae;
+}
+
+.tomorrow-purple, pre .keyword, pre .javascript .function {
+  color: #8959a8;
+}
+
+pre code {
   display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  background: #3f3f3f;
-  color: #dcdcdc;
+  background: white;
+  color: #4d4d4c;
+  font-family: Menlo, Monaco, Consolas, monospace;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  padding: 10px;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-tag {
-  color: #e3ceab;
-}
-
-.hljs-template-tag {
-  color: #dcdcdc;
-}
-
-.hljs-number {
-  color: #8cd0d3;
-}
-
-.hljs-variable,
-.hljs-template-variable,
-.hljs-attribute {
-  color: #efdcbc;
-}
-
-.hljs-literal {
-  color: #efefaf;
-}
-
-.hljs-subst {
-  color: #8f8f8f;
-}
-
-.hljs-title,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-section,
-.hljs-type {
-  color: #efef8f;
-}
-
-.hljs-symbol,
-.hljs-bullet,
-.hljs-link {
-  color: #dca3a3;
-}
-
-.hljs-deletion,
-.hljs-string,
-.hljs-built_in,
-.hljs-builtin-name {
-  color: #cc9393;
-}
-
-.hljs-addition,
-.hljs-comment,
-.hljs-quote,
-.hljs-meta {
-  color: #7f9f7f;
-}
-
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-.hljs-strong {
-  font-weight: bold;
-}
