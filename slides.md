@@ -19,33 +19,98 @@ transition: none
 
 ## Modern web design is complex
 
-![Airbnb homepage](img/airbnb.png)
+![Airbnb homepage](img/airbnb.png){.captioned}
 
 
 :::notes
-- What do we mean by this?
-- Modern webpages are complex applications with rich graphic and user interface designs
+Modern webpages are complex, full-featured applications with really impressive designs, and there are a lot of people interested in learning to style these rich interfaces.
+
+The nice thing about the Web is that even if I'm an inexperienced developer, it's really easy to stumble upon tons of interesting designs during my regular browsing sessions.
 :::
 
-## "How do I make this?"
 
-![StackOverflow is filled with questions: "how can I make something like this?"](img/stackoverflow.png)
+## "How do I make a form like this?"
+
+![Airbnb booking bar component](img/airbnb-bar.png)
 
 
 :::notes
-- Wouldn't it be great if I could say, "I want to make something _like that_"?
-- Theoretically, you can -- devtools are available, pages are open source
+And so let's say I come across this example from the Airbnb homepage, and I'd like to replicate this booking bar here.
 :::
 
-## Modern **HTML, CSS** are complex
+
+## Tutorials may be hard to find
+
+![Codrops tutorial search](img/codrops-search.png){.captioned.captioned-light}
+
+
+:::notes
+So one thing you can do is to search for tutorials on Google, or browse a website like CSSTricks.
+
+But this is actually not trivial, because it's difficult to articulate exactly what you're looking for.
+:::
+
+## Jargon-heavy keywords
+
+![Codrops tutorial search](img/codrops-tutorials.png){.captioned.captioned-light}
+
+
+::: notes
+On top of that, many tutorials use domain-specific keywords like "Material design" or "jump loader animation" that might not be familiar to novices.
+:::
+
+## Tutorials can be too simple
+
+![Airbnb booking bar component](img/airbnb-bar.png)
+
+vs.
+
+![A similar Codepen](img/codepen.png)
+
+
+:::notes
+But the biggest problem is that tutorials are often _too simplistic_, and don't offer the same richness of professional designs.
+
+This is an example of a Codepen that came up when I searched for "booking form CSS tutorial". You can see that it's definitely a booking form, but not quite what we want from the Airbnb example.
+:::
+
+
+## Any webpage can be inspected...
 
 ![Inspecting the Airbnb homepage in CDT](img/airbnb-cdt.png)
 
+
 :::notes
-- But richness in design comes at a cost: frameworks, components, application demands
-- Prior work has focused on interactive functionality
-- "Look" can be just as hard as "feel"!
+Now if you're an expert, you can just use the "Inspect Element" feature built into modern browser devtools to inspect the actual DOM and CSS used to construct the page.
+
+And experts perform this sort of debugging and inspection quite frequently, to understand how other webpages implement effects using modern development best practices that tutorials don't always convey.
 :::
+
+## Tools are overwhelming to novices
+
+
+:::::: annotated
+![Not](img/airbnb-cdt-only.png)
+
+
+::: {.annotation .right .top style="width: 30%; height: 78%;"}
+:::
+::::::
+
+
+:::notes
+Unfortunately, if you're relatively new to web design and you only know basic HTML and CSS syntax but not development practices, the output of the inspector is pretty overwhelming for any nontrivial webpage.
+
+In this talk, I'm going to show you
+
+- what exactly novices find challenging about inspecting production webpage CSS
+- what that implies for the design of inspection tools
+- how we implemented that tool
+- and how it actually worked
+
+
+:::
+
 
 ## Needfinding
 
@@ -70,180 +135,17 @@ We conducted two stages of needfinding.
 More details in paper
 :::
 
-## Why inspect professional examples?
 
+## Novices rely on visual intuition, but existing inspection tools do not support reasoning visually about unfamiliar code.
 
-:::notes
-- First thing we tried to understand: are professional examples even worth studying? Why not just use tutorials?
-- Here are some results
-:::
-
----
-
-<!-- TODO: Add images of professional examples -->
-
-:::::: {.columns}
-::: {.column width="50%"}
-### Professional webpages
-
-- Loads of sources
-
-- Easy to find opportunistically
-
-:::
-::: {.column width="50%"}
-### Tutorials
-
-- May not fit user's needs
-
-- Hard to find without domain vocabulary
-
-:::
-::::::
-
-
-. . .
-
-
-:::::: {.columns style="text-align: left;"}
-::: {.column width="50%"}
-- **Teach best practices**
-:::
-::: {.column width="50%"}
-- **Easily outdated, too simplistic**
-:::
-::::::
-
-
-:::notes
-We can divide this question into two categories: benefits of PEs and drawbacks of tutorials.
-
-## Precision
-
-- Since any webpage has the potential to be an example, the odds are good that users can find something that exactly matches what they have in mind.
-
-- Conversely, authoring tutorials is expensive so there are far fewer of them. Users expressed frustration when they found a tutorial but the outcome wasn't exactly what they were looking for. 
-
-<!-- TODO: Example -->
-
-## Discoverability
-
-- Likewise, professional examples allowed participants to discover interesting examples during their normal Web usage.
-
-- OTOH, tutorials often use domain-specific terminology and keywords like "parallax scrolling" or "hero image" that are not obvious to novices -- they struggled to find relevant resources
-
-. . .
-
-## Pedagogical value
-
-This last criterion was _not_ raised by users during needfinding, but it's one we're interested in as a research community.
-
-Since professional examples are more realistic than toy examples, can they:
-
-- expose **authentic development practices** that arise on production webpages
-- serve as **concrete, explorable examples** of abstract CSS concepts
-:::
-
+<!-- [@Gross:2010:TTF:1937117.1937123; @JoelBrandt:2010ula; @Ko:2004td] -->
 
 ---
 
 <h2 class="h1">Obstacles to inspection</h2>
 
-## Novices rely on visual intuition
-
-[@Gross:2010:TTF:1937117.1937123; @JoelBrandt:2010ula; @Ko:2004td]
-
-
-:::notes
-First, some context: we know from prior work that novice programmers think about programs in terms of visual outcomes, but struggle to relate these outcomes to program constructs.
-:::
-
----
-
-
-!["How do I make a row of cells?"](img/airbnb-bar.png){.captioned}
-
-
-. . .
-
-:::::: annotated
-!["How are the cells aligned?"](img/airbnb-cdt-only.png){.captioned}
-
-
-::: {.annotation .right .top style="width: 30%; height: 78%;"}
-:::
-::::::
-
-
-:::notes
-Our needfinding corroborates this well. The fundamental pattern that all of our users followed went something like this:
-
-1. Identify a visual entity of interest on the page, e.g. a row of grid cells
-2. Formulate a hypothesis about the implementation **based on prior knowledge**
-:::
-
-
-## "How are the cells aligned?"
-
-
-::::::::: columns
-:::::: {.column width=50%}
-::: annotated
-![Lots of properties to check](img/airbnb-cdt-css.png)
-
-
-::: {.annotation .left style="top: 61.5%; height: 4%; border-color: blue;"}
-:::
-:::
-::::::
-
-:::::: {.column width=50%}
-- `float: left;` ?
-
-- `width: 33%;` ?
-
-::: framed
-Users don't know:
-
-1. **What** to look for
-2. **Where** to look for it
-
-:::
-::::::
-::::::::::
-
-
-:::notes
-At this stage, users formed hypotheses about _how_ such visual features might be implemented. The quality of these hypotheses depended on their CSS background knowledge, which was limited.
-
-Leads to two problems:
-
-1. The right answer isn't what novices are expecting. Even if they saw the right answer, they might not recognize it.
-2. There is so much unfamiliar information shown that novices are unlikely to even find the right answer to begin with.
-:::
 
 ## Problem 1: Visually ineffective properties
-
-("where" to look)
-
-
-:::notes
-But it's not just about finding a needle in a haystack. As we discovered, there is a specific reason novices struggled to use CDT to explore professional examples.
-:::
-
-## Inactive styles in CDT
-
-![CDT shows inactive styles](img/cdt-css.png)
-
-
-:::notes
-Not all properties are active on a page at once. For instance, a property is inactive if it's shadowed by a more specific assignment in the cascade. It might also be a parse failure (which is actually fairly common on production webpages due to vendor prefixing).
-
-If you've used CDT before, you may remember that the UI indicates when a property is inactive. This screenshot gives a representative selection of styles: properties are struck through, greyed out, accompanied by a warning sign, or some combination of the above.
-:::
-
-
-## Not all active properties have observable effects!
 
 
 ::: annotated
@@ -260,32 +162,11 @@ If you've used CDT before, you may remember that the UI indicates when a propert
 
 
 :::notes
-Based on this, it's reasonable to believe that properties that appear normal are, in fact, relevant.
-
-But as we saw during needfinding, this is often not the case! Here, all the properties shaded in red can be removed completely from the page without any change to the component in question.
-
 TODO: Elaborate on why
-
-This example illustrates a fundamental misalignment between users, who rely on visual intuition to guide their search, and browser tools, which have no knowledge of visual effects.
 :::
 
 
 ## Problem 2: Missing conceptual knowledge
-
-("what" to look for)
-
-
-:::notes
-Recall that the second problem was one of prior knowledge: users formulated hypotheses about how effects were implemented based on their conceptual understanding of CSS.
-
-Usually, these hypotheses were wrong or shallow because users had only been exposed to very simple or outdated CSS.
-:::
-
-## How useful are professional examples?
-
-> Either a 7 [out of 10] or a 1 [out of 10], if there’s some **concept I don’t understand**. If there ended up being something that required some background knowledge...**you just get lost**.
-
-## Example: Indiegogo footer
 
 
 :::::: annotated
@@ -298,67 +179,17 @@ Usually, these hypotheses were wrong or shallow because users had only been expo
 
 
 :::notes
-Here's the footer from the Indiegogo homepage. I want to concentrate on these four columns over here.
+Visual intuition does not match behaviour of the language
 :::
 
 
----
 
-
-:::::: columns
-::: {.column width=50%}
-![Half of the footer CSS](img/indiegogo-cdt-css-1.png)
-
-
-:::
-
-::: {.column width=50%}
-![Other half of the footer CSS](img/indiegogo-cdt-css-2.png)
-
-
-:::
-:::::::
-
-
-:::notes
-Here's the CSS that's been applied to this element. It didn't fit in one column, so I split it up for your reading pleasure.
-
-NB. This is a great example of a few characteristics of modern production stylesheets:
-
-1. `@media` queries for responsiveness across different window breakpoints
-  - First rule applies to viewports 1001px or wider, second to 768px or wider, and third is the default (mobile-first) design
-  - Simple shadowing: `padding-top: inherit;` in the first rule shadows `padding-top: 40px`; in the last rule
-
-  - Also something subtler: ABA overriding (TODO: finish me)
-
-2. Autoprefixing for cross-browser compatibility
-  - `display` has 6 values: `box`, `-webkit-flex`, `-moz-flex`, `-ms-flexbox`, `-ms-flex`, and finally `flex`
-:::
-
----
+## Properties have relationships
 
 ```css
 .quickLinksSection {
   display: flex;
   flex-basis: 67%;
-  padding-right: 25px;
-  justify-content: space-between;
-}
-```
-
-
-:::notes
-It turns out that if all you want to do is replicate the footer I showed you a couple of slides back, you can replace all of that with these four lines of code. If you're a user trying to replicate this site, it would already be great if we had a tool to hide all of the visually-ineffective properties.
-:::
-
-
-## "I've heard of Flexbox but that's it"
-
-```css
-.quickLinksSection {
-  display: flex;
-  flex-basis: 67%;
-  padding-right: 25px;
   justify-content: space-between;
 }
 ```
@@ -374,108 +205,8 @@ For this situation, a minimal slice is necessary but not sufficient. A lot of th
 So if you're a novice CSS user who relies heavily on visual guess-and-check to reason about stylesheets, what conceptual knowledge are you missing?
 :::
 
-## Not all properties are visually intuitive
-
-```css
-.simple {
-  color: red;
-  font-size: 16px;
-  margin: 10px;
-}
-```
-
-. . .
-
-
-```css
-.quickLinksSection {
-  display: flex;
-  flex-basis: 67%;
-  justify-content: space-between;
-}
-```
-
-:::notes
-First of all, you have to predict the effect of each property.
-
-If I show you some CSS like this, it's fairly clear that each property corresponds 1-to-1 with a discrete visual effect. This is the type of CSS most people learn.
-
-. . .
-
-On the other hand, it's harder to infer what the properties in this Indiegogo example do. (I've left out `padding-right` because it falls into the former category.) What does `display` do? It's not immediately clear.
-:::
-
-## Not all properties are independent
-
-```css
-.simple {
-  color: red;
-  font-size: 16px;
-  margin: 10px;
-}
-```
-
-. . .
-
-
-```css
-.quickLinksSection {
-  display: flex;
-  flex-basis: 67%;
-  padding-right: 25px;
-  justify-content: space-between;
-}
-```
-
-:::notes
-But there's also a second, subtler issue.
-
-In the first block of code, these properties are essentially orthogonal. Setting the text color to `red` is totally independent of setting the margin to 10 pixels.
-
-. . .
-
-On the other hand, this is _not_ true of the second example. Some of these properties are related -- I'll spell out exactly how in a moment.
-:::
 
 ## Dependencies between properties
-
-```css
-.quickLinksSection {
-  display: flex;
-  flex-basis: 67%;
-  padding-right: 25px;
-  justify-content: space-between;
-}
-```
-
-. . .
-
-
-```css
-.quickLinksSection {
-  display: flex;
-  flex-basis: 67%;
-  /* ------------------------------------- */
-  padding-right: 25px;
-  /* ------------------------------------- */
-  justify-content: space-between;
-}
-```
-
-:::notes
-Let's say you're a novice CSS user, you've heard of Flexbox but never used it and don't really know what any of the properties do. (Or, let's be real, you're an advanced CSS user and you don't have the CSSTricks Flexbox guide open in another tab.) You want to understand how these four lines work together to produce the four-column footer on the Indiegogo website.
-
-. . .
-
-A reasonable first hypothesis might be to group the properties like this:
-
-- `flex-basis` has "flex" in the name, so it probably depends on `display: flex;`.
-- I know what `padding-right` does, so that's probably irrelevant.
-- I don't know what `justify-content` does, so we'll just put that in its own group.
-:::
-
-
----
 
 ### Wrong
 
@@ -537,37 +268,23 @@ Their guidelines are:
 <http://localhost:7999/indiegogo>
 
 
-## A DOM/CSS inspector
+## Pruning ineffective properties
 
-<!-- TODO: Screenshot -->
-
-:::notes
-As a DOM/CSS inspector, Ply is conceptually similar to CDT or Firebug.
-
-- You can launch it on any webpage of interest
-- Select a component to inspect
-- Unfold the DOM subtree, highlight nodes on the page
-
-- Click on a node to see its matched CSS styles
-- Click on properties to toggle them on and off, etc.
-
-Things you can't yet do:
-
-- Mutate anything other than toggling properties (e.g. adding rules, modifying node attributes, changing values)
-:::
-
-## Relevance pruning
-
-<!-- TODO: GIF -->
+TODO: GIF
 
 > **Hide visually-irrelevant code** from inspector output to minimize information overload and support novices' visual approach to sense-making
 
 
-## Conceptual filters
+## Computing dependencies
 
-<!-- TODO: GIF -->
+TODO: GIF
 
 > **Embed contextual guidance** into inspector output to explain how CSS properties coordinate to produce visual effects.
+
+
+::: notes
+Context of sense-making
+:::
 
 
 ---
@@ -638,13 +355,29 @@ $\implies \quad$ `display: block;` is **ineffective**
 }
 ```
 
-A property `justify-content`{style="color: red;"} _depends on_ a property `display: flex;`{style="color: blue;"} if 
+. . . 
 
-- when `display: flex;`{style="color: blue;"} is active, `justify-content`{style="color: red;"} is **visually effective**
-- when `display: flex;`{style="color: blue;"} is disabled, `justify-content`{style="color: red;"} is dead code
 
-<!-- TODO: GIFs -->
+### `display: flex;`
 
+TODO: GIF of toggling `justify-content`
+
+
+. . .
+
+
+### <strike>`display: flex;`</strike>
+
+TODO: GIF of toggling `justify-content`
+
+
+## Implicit dependencies
+
+A property `justify-content`{style="color: red;"} _depends on_ a property `display: flex;`{style="color: blue;"} if
+
+::: framed
+`justify-content`{style="color: red;"} is **visually effective** if and only if `display: flex;`{style="color: blue;"} is active.
+:::
 
 ---
 
@@ -661,28 +394,16 @@ Does pruning ineffective properties help developers replicate features more quic
 
 ![IDEO grid](img/ideo.png)
 
-
-:::::: columns
-::: {.column width=50%}
-- $n = 12$, between-subjects
-- 40 minutes
-- CDT as control
-
-:::
-
-::: {.column width=50%}
-- Three milestones (grid, images, yellow)
-- Other styling (colors, typography)
-:::
-::::::
+- $n = 12$, between-subjects, CDT as control
+- 40 minutes, three milestones
 
 
 ## Cumulative completion times
 
 ![Milestones](img/milestones.png){width=100%}
 
-## Results
 
+::: notes
 - Ply users 3.5 times faster to first milestone
   - $t(10) = -3.5, p = .01$
   - Ply: $\mu = 2.5, \sigma = 1.64$
@@ -692,8 +413,7 @@ Does pruning ineffective properties help developers replicate features more quic
   - $t(10) = -2.4, p = .06$
   - Ply: $\mu = 16.67, \sigma = 1.63$
   - CDT: $\mu = 24.83, \sigma = 8.08$
-
-- Decreased variance in Ply condition, across all milestones
+:::
 
 
 ## Study 2: Conceptual learning
@@ -703,30 +423,42 @@ Does pruning ineffective properties help developers replicate features more quic
 How does embedded guidance help novice developers learn new CSS concepts?
 :::
 
+
 ## Setup
 
-
-:::::: columns
-::: {.column width=50%}
-- $n = 5$
-- Very inexperienced users
+- $n = 5$ inexperienced users
 - Pre- and post-tests
-- Tasks: implicit dependencies and visual subtypes (in paper)
+- Implicit dependencies and visual subtypes (see paper)
 
+## Inspecting implicit dependencies
 
-:::
-
-::: {.column width=50%}
 ![Oscar](img/study2-oscar.png)
-![Indiegogo](img/study2-indiegogo.png)
+
+```css
+.header {
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+```
+
+## Novices made sense of dependencies
+
+- Before: 0 out of 5 identified dependency between `z-index` and `position`
+- After: 5 out of 5
+
+. . .
+
+> Something about `z-index` would change as a result of `position` not being fixed. `position: fixed;` is doing something beyond pinning in place while you scroll
 
 
-:::
-::::::
+## Discussion
 
-## Results
+- Production webpages as authentic learning materials
+- Inspection tools should use visual organizational principles
 
-TODO: Finish this
 
 ## More in the paper
 
