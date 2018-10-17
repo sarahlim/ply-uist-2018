@@ -26,7 +26,7 @@
   --bg-color: #fff;
   --border-color: #d4d4d4;
   --mark-color: rgb(102, 136, 255);
-  /* --bg-color: #F0F1EB; */
+  --caption-color: #787878;
 
   --serif-stack: "PT Serif", "Calluna", "Arno Pro", serif;
   --sans-serif-stack: "Average Sans", sans-serif;
@@ -92,6 +92,14 @@ body {
   margin-bottom: 40px;
 }
 
+/***************************************
+ * COLUMNS
+ */
+
+div.column.middle {
+  vertical-align: middle; 
+}
+
 /*********************************************
  * HEADERS
  *********************************************/
@@ -152,12 +160,18 @@ body {
   margin: var(--img-margin-y) 0;
 }
 
+.reveal .shadowed {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
 .reveal figcaption {
   display: none;
 }
 
 .reveal .captioned + figcaption {
   display: block;
+  font-size: 0.8em;
+  color: var(--caption-color);
 }
 
 .reveal .annotated {
@@ -252,6 +266,11 @@ body {
 .reveal ol ul {
   display: block;
   margin-left: 40px; }
+
+.reveal ul li,
+.reveal ol li {
+  margin-bottom: 5px;
+}
 
 .reveal dt {
   font-weight: bold; }
