@@ -1,4 +1,4 @@
-FILE = slides
+FILE = index
 
 all:
 	pandoc -t revealjs -s -o $(FILE).html $(FILE).md \
