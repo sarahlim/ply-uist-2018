@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Sarah Lim, Josh Hibschman, Haoqi Zhang, Nell O’Rourke">
+  <meta name="author" content="Northwestern University">
+  <title>Ply</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/slim.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Ply</h1>
+  <p class="subtitle">A Visual Web Inspector for Learning from Professional Webpages</p>
+  <p class="author">Sarah Lim, Josh Hibschman, Haoqi Zhang, Nell O’Rourke</p>
+  <p class="author">Northwestern University</p>
+  <p class="date">UIST 2018, Berlin</p>
+</section>
+
+<section id="modern-web-design-is-complex-and-hard-to-learn" class="slide level2">
+<h2>Modern web design is complex and hard to learn</h2>
+<figure>
+<img data-src="img/airbnb.png" alt="Source: Airbnb homepage" class="captioned" /><figcaption>Source: Airbnb homepage</figcaption>
+</figure>
+<aside class="notes">
+<p>Modern webpages are complex, full-featured applications with really impressive designs, and there are a lot of people interested in learning to style these rich interfaces.</p>
+<p>The nice thing about the Web is that even if I’m an inexperienced developer, it’s really easy to stumble upon tons of interesting designs during my regular browsing sessions.</p>
+</aside>
+</section>
+<section id="how-do-i-make-a-form-like-this" class="slide level2">
+<h2>“How do I make a form like this?”</h2>
+<figure>
+<img data-src="img/airbnb-bar.png" alt="Airbnb booking bar component" /><figcaption>Airbnb booking bar component</figcaption>
+</figure>
+<aside class="notes">
+<p>And so let’s say I come across this example from the Airbnb homepage, and I’d like to replicate this booking form here.</p>
+<p>Specifically, I want to create a form with each field in its own column.</p>
+</aside>
+</section>
+<section id="tutorials-may-be-hard-to-find" class="slide level2">
+<h2>Tutorials may be hard to find</h2>
+<figure>
+<img data-src="img/codrops-search.png" alt="Source: Codrops.com" class="captioned shadowed" /><figcaption>Source: Codrops.com</figcaption>
+</figure>
+<aside class="notes">
+<p>So one thing you can do is to search for tutorials on a websites like CSSTricks or Codrops.</p>
+<p>But it’s often difficult to specify exactly what aspect of the design you’d like a tutorial for.</p>
+</aside>
+<!-- ## Jargon-heavy keywords -->
+<!-- ![Codrops tutorial search](img/codrops-tutorials.png){.captioned.captioned-light} -->
+<!-- ::: notes -->
+<!-- On top of that, many tutorials use domain-specific keywords like "Material design" or "jump loader animation" that might not be familiar to novices. -->
+<!-- ::: -->
+</section>
+<section id="tutorials-arent-quite-right" class="slide level2">
+<h2>Tutorials aren’t quite right</h2>
+<figure>
+<img data-src="img/airbnb-bar.png" alt="Airbnb booking bar component" /><figcaption>Airbnb booking bar component</figcaption>
+</figure>
+<p>vs.</p>
+<figure>
+<img data-src="img/codepen.png" alt="Source: Codepen" class="shadowed captioned" /><figcaption>Source: <a href="https://codepen.io/andiio/pen/tFECp?editors=1100">Codepen</a></figcaption>
+</figure>
+<aside class="notes">
+<p>But the biggest problem is that tutorials are often <em>too simplistic</em> and not exactly what we’re looking for.</p>
+<p>Here’s a toy example that I found when searching for tutorials. You can see right away that it doesn’t quite match the aesthetics of the original, which is dissatisfying.</p>
+</aside>
+</section>
+<section id="production-webpages-embed-best-practices" class="slide level2">
+<h2>Production webpages embed best practices</h2>
+<div class="columns">
+<div class="column" style="position: relative; top: 50%; left: 0; transform: translateY(25%);" style="width:50%;">
+<figure>
+<img data-src="img/airbnb-bar.png" alt="Tabular display" class="captioned" /><figcaption>Tabular display</figcaption>
+</figure>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb1"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">.container</span> {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">display</span>: <span class="dv">table</span>;</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">}</a></code></pre></div>
+</div>
+</div>
+<p>vs.</p>
+<div class="columns">
+<div class="column" style="position: relative; top: 50%; left: 0;" style="width:50%;">
+<figure>
+<img data-src="img/codepen-zoom.png" alt="Floats" class="captioned" /><figcaption>Floats</figcaption>
+</figure>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb2"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">.container</span> {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">float</span>: <span class="dv">left</span>;</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">}</a></code></pre></div>
+</div>
+</div>
+<aside class="notes">
+<p>But another problem is that tutorials often don’t reflect up-to-date best practices.</p>
+<p>The Airbnb example uses <code>display: table;</code> to achieve a tabular layout without using a semantically-incorrect <code>&lt;table&gt;</code> element.</p>
+<p>The toy example uses floats and clearfix, which is a pretty outdated approach to layout.</p>
+</aside>
+</section>
+<section id="any-webpage-can-be-inspected" class="slide level2">
+<h2>Any webpage can be inspected…</h2>
+<figure>
+<img data-src="img/airbnb-cdt.png" alt="Inspecting the Airbnb homepage in CDT" /><figcaption>Inspecting the Airbnb homepage in CDT</figcaption>
+</figure>
+<aside class="notes">
+<p>Now experts know this, so they often use the “Inspect Element” feature built into modern browser devtools to inspect the underlying implementation.</p>
+<p>how other webpages implement effects using modern development best practices that tutorials don’t always convey.</p>
+</aside>
+</section>
+<section id="but-tools-are-overwhelming-for-novices" class="slide level2">
+<h2>But tools are overwhelming for novices</h2>
+<div class="annotated">
+<figure>
+<img data-src="img/airbnb-cdt-only.png" alt="Focusing on Airbnb CSS" class="shadowed" /><figcaption>Focusing on Airbnb CSS</figcaption>
+</figure>
+<div class="annotation right top" style="width: 30%; height: 78%;">
+
+</div>
+</div>
+<aside class="notes">
+<p>But lots of information, hard to understand what’s going on</p>
+</aside>
+</section>
+<section id="contributions" class="slide level2">
+<h2>Contributions</h2>
+<ul>
+<li>Needfinding: inspection pain points</li>
+<li>Ply: a visually-aware web inspector</li>
+<li>Two user studies
+<ul>
+<li>Users replicate CSS 50% more quickly</li>
+<li>Learn new concepts</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>So to address these challenges, we make the following contributions:</p>
+<ul>
+<li>what exactly novices find challenging about inspecting production webpage CSS, and what that implies for the design of inspection tools</li>
+<li>I’ll walk you through Ply, the tool we built to address these challenges</li>
+<li>and demonstrate how it helped novices replicate a complex design 50% more quickly and learn new concepts</li>
+</ul>
+</aside>
+</section>
+<section id="needfinding" class="slide level2">
+<h2>Needfinding</h2>
+<ul>
+<li><p><strong>Surveyed</strong> undergraduate web developers (<span class="math inline"><em>n</em> = 20</span>)</p>
+<ul>
+<li>Experiences with tutorials, inspecting examples</li>
+</ul></li>
+<li><p>In-person <strong>follow-up study</strong> (<span class="math inline"><em>n</em> = 10</span>)</p>
+<ul>
+<li>Replicating features from professional webpages using Chrome DevTools (CDT)</li>
+</ul></li>
+</ul>
+<!-- TODO: Include images of Uber, etc. -->
+<aside class="notes">
+<p>We conducted two stages of needfinding.</p>
+<ol type="1">
+<li><p>Surveyed 20 undergrad web devs about their experiences learning web development, using tutorials, and inspecting professional examples</p></li>
+<li><p>Followed up with 10 of them for an in-person study, during which they replicated web features on professional webpages using CDT</p></li>
+</ol>
+<p>More details in paper</p>
+</aside>
+</section>
+<section id="novices-rely-on-visual-intuition-but-existing-inspection-tools-do-not-support-reasoning-visually-about-unfamiliar-code." class="slide level2">
+<h2>Novices rely on <span style="color: #0079ff;">visual intuition</span>, but existing inspection tools do not support reasoning visually about unfamiliar code.</h2>
+<div class="fragment">
+<p>In line with <span class="citation" data-cites="Gross:2010:TTF:1937117.1937123">Gross and Kelleher (2010)</span>, <span class="citation" data-cites="JoelBrandt:2010ula">Brandt et al. (2010)</span>, <span class="citation" data-cites="Ko:2004td">Ko, Myers, and Aung (2004)</span></p>
+<aside class="notes">
+<p>Our high-level finding was that novices rely heavily on their visual intuition to comprehend unfamiliar CSS, and struggle to relate visual outcomes to responsible lines of code.</p>
+<p>This is consistent with prior work that end user programmers struggle to identify the lines of code responsible for graphical outputs of interest.</p>
+<p>In particular, I want to talk about two core obstacles we identified in the context of CSS inspection.</p>
+</aside>
+</div>
+</section>
+<section id="problem-1-visually-ineffective-properties" class="slide level2">
+<h2>Problem 1: Visually ineffective properties</h2>
+</section>
+<section id="effective-properties" class="slide level2">
+<h2>Effective properties</h2>
+<figure>
+<img data-src="img/effective-one.gif" alt="Toggling properties with effects" /><figcaption>Toggling properties with effects</figcaption>
+</figure>
+<aside class="notes">
+<p>So first, if you’ve used Chrome DevTools you probably know that you can click a property to toggle it on and off, live on the page.</p>
+</aside>
+</section>
+<section id="ineffective-properties" class="slide level2">
+<h2>Ineffective properties</h2>
+<figure>
+<img data-src="img/ineffective-all.gif" alt="Toggling is a no-op" class="captioned" /><figcaption>Toggling is a no-op</figcaption>
+</figure>
+<aside class="notes">
+<p>The problem is that even though Chrome crosses off properties that it knows are inactive, there are <em>still</em> properties left that can be toggled without changing the page’s appearance.</p>
+</aside>
+</section>
+<section id="ineffective-properties-are-common" class="slide level2">
+<h2>Ineffective properties are common</h2>
+<div class="columns">
+<div class="column middle" style="width:50%;">
+<div class="annotated">
+<figure>
+<img data-src="img/airbnb-cdt-css.png" alt="✗ = ineffective" class="captioned" /><figcaption>✗ = ineffective</figcaption>
+</figure>
+<div class="annotation filled" style="width: 80%; height: 13%; top: 22%; left: 5%;">
+<p><span style="position: absolute; top: 50%; right: 100%; transform: translate(-50%, -50%); color: red;">✗</span></p>
+</div>
+<div class="annotation filled" style="width: 80%; height: 8%; top: 38%; left: 5%;">
+<p><span style="position: absolute; top: 50%; right: 100%; transform: translate(-50%, -50%); color: red;">✗</span></p>
+</div>
+<div class="annotation filled" style="width: 80%; height: 2%; top: 56%; left: 5%;">
+
+</div>
+<div class="annotation filled" style="width: 80%; height: 8%; top: 58.5%; left: 5%; background: rgba(0, 200, 100, 0.3);">
+<p><span style="position: absolute; top: 50%; right: 100%; transform: translate(-50%, -50%); color: green;">✓</span></p>
+</div>
+</div>
+</div><div class="column middle" style="width:50%;">
+<ul>
+<li>Style guides, component libraries</li>
+<li>Responsive breakpoints (<code>@media</code> queries)</li>
+<li>Interaction states</li>
+</ul>
+</div>
+</div>
+<aside class="notes">
+<p>This would be fine if it were only one or two, but tragically, there are a lot – the red highlights are properties that are visually ineffective but appear relevant in Chrome – and you can see that it’s pushed the relevant properties in green to the bottom of the fold.</p>
+<p>As we observed in needfinding, when relevant code was pushed below the fold, it was hard for novices to find</p>
+<p>These properties exist for a few reasons. Production webpages often use styleguides</p>
+<p>But even if you were to remove all the ineffective properties…</p>
+</aside>
+</section>
+<section id="problem-2-missing-conceptual-knowledge" class="slide level2">
+<h2>Problem 2: Missing conceptual knowledge</h2>
+<aside class="notes">
+<p>But even if you removed these it’s not enough – we also found in needfinding that novices lacked conceptual knowledge that prevented them from making sense of unfamiliar example code.</p>
+<p>In particular, novices struggled to understand how multiple properties work together to produce visual outcomes.</p>
+<p>An example of this is implicit dependencies.</p>
+</aside>
+</section>
+<section id="implicit-dependencies" class="slide level2">
+<h2>Implicit dependencies</h2>
+<div class="columns">
+<div class="column" style="width: 30%; transform: translateY(50%);">
+<div class="example-1">
+<h4 class="blue">
+Hello
+</h4>
+<div class="red">
+
+</div>
+<style type="text/css">
+  .example-1 {
+    position: relative;
+  }
+
+  .example-1 .blue {
+    color: #0079ff;
+    font-size: 2em;
+    display: table;
+  }
+  
+  .example-1 .red {
+    width: 75px;
+    height: 150px;
+    background: #ff3d38;
+  }
+  
+  .example-1 .red {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .example-1 .blue {
+    z-index: 300;
+  }
+</style>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb3"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">.blue</span> {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">z-index</span>: <span class="dv">300</span>;</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">}</a></code></pre></div>
+</div>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width: 30%; transform: translateY(50%);">
+<div class="example-2" style="transform: translateZ(0);">
+<h4 class="blue">
+Hello
+</h4>
+<div class="red">
+
+</div>
+<style type="text/css">
+  .example-2 {
+    position: relative;
+  }
+
+  .example-2 .blue {
+    color: #0079ff;
+    font-size: 2em;
+    display: table;
+  }
+  
+  .example-2 .red {
+    width: 75px;
+    height: 150px;
+    background: #ff3d38;
+  }
+  
+  .example-2 .red {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .example-2 .blue {
+    z-index: 300;
+    position: relative;
+  }
+</style>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb4"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">.blue</span> {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw">z-index</span>: <span class="dv">300</span>;</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="kw">position</span>: <span class="dv">relative</span>;</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">}</a></code></pre></div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="framed">
+<p><code>z-index</code> depends upon <code>position</code></p>
+</div>
+<aside class="notes">
+<p>one thing that people struggled with is understanding when multiple properties worked together to produce a visual effect</p>
+<p>e.g. here a user</p>
+<p>It might seem like these are independent properties, but alas</p>
+</aside>
+</div>
+</section>
+<section id="designing-a-learner-friendly-web-inspector" class="slide level2">
+<h2>Designing a learner-friendly web inspector</h2>
+<ol type="1">
+<li><p><span style="color: #0079ff;">Hide visually-irrelevant code</span> to minimize information overload and support novices’ visual intuition</p></li>
+<li><p><span style="color: #0079ff;">Embed contextual guidance</span> into inspector output to explain how properties coordinate</p></li>
+</ol>
+<p>Building from <span class="citation" data-cites="Quintana:2004bg">Quintana et al. (2004)</span></p>
+<aside class="notes">
+<p>So what we’re seeing is that there’s a gap between novices’ approach to sense-making and how developer tools are currently designed.</p>
+<p>Learning sciences</p>
+<p>software can scaffold learners past these gaps.</p>
+<p>So we build on their guidelines to propose new design guidelines for learner-friendly web inspectors.</p>
+<hr />
+<ol type="1">
+<li><p><strong>Hide visually-irrelevant code</strong> from inspector output to minimize information overload and support novices’ visual approach to sense-making</p></li>
+<li><p><strong>Embed contextual guidance</strong> into inspector output to explain how CSS properties coordinate to produce visual effects.</p></li>
+</ol>
+<hr />
+<p>Their guidelines are:</p>
+<ol type="1">
+<li><p>Use representations and language that bridge learners’ understanding (which in our case is visual intuition)</p></li>
+<li>Embed expert guidance into the sense-making process to provide missing domain knowledge</li>
+</ol>
+</aside>
+</section>
+<section id="ply-a-dom-and-css-inspector" class="slide level2">
+<h2>Ply: a DOM and CSS inspector</h2>
+<figure>
+<img data-src="img/ply/overview.png" alt="Ply teaser screenshot" /><figcaption>Ply teaser screenshot</figcaption>
+</figure>
+</section>
+<section id="pruning-ineffective-properties" class="slide level2">
+<h2>1. Pruning ineffective properties</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<figure>
+<img data-src="img/ply/pruning-before.png" alt="Before" class="captioned" /><figcaption>Before</figcaption>
+</figure>
+</div><div class="column" style="width:50%;">
+
+</div>
+</div>
+</section>
+<section id="pruning-ineffective-properties-1" class="slide level2">
+<h2>1. Pruning ineffective properties</h2>
+<div class="columns">
+<div class="column annotated" style="width:50%;">
+<figure>
+<img data-src="img/ply/pruning-before.png" alt="Before" class="captioned" /><figcaption>Before</figcaption>
+</figure>
+<div class="annotation" style="top: 50px; right: 3%; height: 35px; width: 20%;">
+
+</div>
+</div><div class="column" style="width:50%;">
+
+</div>
+</div>
+</section>
+<section id="pruning-ineffective-properties-2" class="slide level2">
+<h2>1. Pruning ineffective properties</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<figure>
+<img data-src="img/ply/pruning-before.png" alt="Before" class="captioned" style="opacity: 0.4;" /><figcaption>Before</figcaption>
+</figure>
+</div><div class="column" style="width:50%;">
+<figure>
+<img data-src="img/ply/pruning-after.png" alt="After" class="captioned" /><figcaption>After</figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<p>When you click this Prune button, it greys out all the visually-ineffective properties.</p>
+</aside>
+</section>
+<section id="computing-dependencies" class="slide level2">
+<h2>2. Computing dependencies</h2>
+<figure>
+<img data-src="img/ply/deps-show.png" alt="Show dependencies" class="shadowed" /><figcaption>Show dependencies</figcaption>
+</figure>
+</section>
+<section id="computing-dependencies-1" class="slide level2">
+<h2>2. Computing dependencies</h2>
+<figure>
+<img data-src="img/ply/deps-hide.png" alt="Hide dependencies" class="shadowed" /><figcaption>Hide dependencies</figcaption>
+</figure>
+</section>
+<section id="computing-dependencies-2" class="slide level2">
+<h2>2. Computing dependencies</h2>
+<figure>
+<img data-src="img/ply/deps-hover.png" alt="Hover dependencies" class="shadowed" /><figcaption>Hover dependencies</figcaption>
+</figure>
+</section>
+<section id="visual-subtypes" class="slide level2">
+<h2>Visual subtypes</h2>
+<p><img data-src="img/study2-indiegogo.png" alt="Indiegogo" /> <img data-src="img/ply/subtypes.png" alt="Visual subtypes" class="shadowed" /></p>
+<p>Using annotations to surface design patterns (see paper)</p>
+</section>
+<section class="slide level2">
+
+<video id="demo" controls muted src="img/ply/demo.mp4">
+</video>
+<script type="text/javascript">
+const demo = document.getElementById('demo');
+demo.playbackRate = 1.5;
+</script>
+<aside class="notes">
+<p>Here’s how it actually works in practice</p>
+</aside>
+</section>
+<section class="slide level2">
+
+<h1 class="h2">
+Visual Relevance Testing
+</h1>
+</section>
+<section id="inspiration-visual-regression-testing" class="slide level2">
+<h2>Inspiration: Visual regression testing</h2>
+<ol type="1">
+<li>Capture original screenshots</li>
+<li>Make changes to codebase</li>
+<li>Test for differences (<span style="color: #ff3d38;">visual regressions</span>) in output</li>
+</ol>
+<aside class="notes">
+<p>Our approach is inspired by a technique called visual regression testing, which is unrelated to statistical regression.</p>
+<ul>
+<li>Start with a UI codebase and take screenshots of key routes</li>
+<li>These screenshots are groundtruth</li>
+<li>Check in a change</li>
+<li>Re-render application and take screenshots of the same routes</li>
+<li>Compare to previous screenshots</li>
+<li>If there is a visual difference – a potential <em>regression</em></li>
+</ul>
+</aside>
+</section>
+<section id="key-idea" class="slide level2">
+<h2>Key idea</h2>
+<p>A property is <strong>visually effective</strong> if and only if its deletion causes a <span style="color: #ff3d38;">regression</span></p>
+<aside class="notes">
+<p>Building on the concept of regressions</p>
+</aside>
+</section>
+<section class="slide level2">
+
+<figure>
+<img data-src="img/vrt-before.png" alt="Original" class="captioned" /><figcaption>Original</figcaption>
+</figure>
+<div class="fragment">
+<figure>
+<img data-src="img/vrt-after.png" alt="Disable width: 100%;" class="captioned" /><figcaption>Disable <code>width: 100%;</code></figcaption>
+</figure>
+</div>
+<div class="fragment">
+<figure>
+<img data-src="img/vrt-diff.png" alt="Visual regression" class="captioned" /><figcaption>Visual regression</figcaption>
+</figure>
+<div class="framed">
+<p><span class="math inline">⟹ </span> <code>width: 100%;</code> is <strong>effective</strong></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<figure>
+<img data-src="img/vrt-before.png" alt="Original" class="captioned" /><figcaption>Original</figcaption>
+</figure>
+<div class="fragment">
+<figure>
+<img data-src="img/vrt-before.png" alt="Disable display: block;" class="captioned" /><figcaption>Disable <code>display: block;</code></figcaption>
+</figure>
+</div>
+<div class="fragment">
+<div class="framed">
+<p><span class="math inline">⟹ </span> <code>display: block;</code> is <strong>ineffective</strong></p>
+</div>
+</div>
+</section>
+<section id="dependency-satisfied" class="slide level2">
+<h2>Dependency satisfied</h2>
+<figure>
+<img data-src="img/deps-satisfied.gif" alt="Dependency satisfied" /><figcaption>Dependency satisfied</figcaption>
+</figure>
+</section>
+<section id="dependency-missing" class="slide level2">
+<h2>Dependency missing</h2>
+<figure>
+<img data-src="img/deps-missing.gif" alt="Dependency missing" /><figcaption>Dependency missing</figcaption>
+</figure>
+<aside class="notes">
+<p>This seems like simple visual comparisons, but it allows us to help a novice understand the example by surfacing the conceptual knowledge about relationships between properties that they didn’t know beforehand.</p>
+</aside>
+</section>
+<section class="slide level2">
+
+<h2 class="h1">
+Evaluation
+</h2>
+<aside class="notes">
+<p>So now I will share how well this works.</p>
+</aside>
+</section>
+<section id="study-1-replication-speed" class="slide level2">
+<h2>Study 1: Replication speed</h2>
+<div class="framed">
+<p>Does pruning ineffective properties help developers replicate features more quickly?</p>
+</div>
+</section>
+<section id="setup" class="slide level2">
+<h2>Setup</h2>
+<ul>
+<li><span class="math inline"><em>n</em> = 12</span>, between-subjects, CDT as control</li>
+<li>40 minutes, three milestones</li>
+</ul>
+<figure>
+<img data-src="img/ideo-browser.png" alt="Ideo" /><figcaption>Ideo</figcaption>
+</figure>
+</section>
+<section id="learners-were-faster-with-ply" class="slide level2">
+<h2>Learners were faster with Ply</h2>
+<ul>
+<li>50% faster overall (n.s., <span class="math inline"><em>p</em> = .06</span>)</li>
+<li>3.5 times faster to first milestone (<span class="math inline"><em>p</em> = .01</span>)
+<ul>
+<li>2.5 vs. 8.9 minutes</li>
+</ul></li>
+</ul>
+<figure>
+<img data-src="img/milestones.png" alt="Milestones" /><figcaption>Milestones</figcaption>
+</figure>
+<aside class="notes">
+<p>Meaningful differences for novices</p>
+<ul>
+<li>Ply users 3.5 times faster to first milestone
+<ul>
+<li><span class="math inline"><em>t</em>(10) =  − 3.5, <em>p</em> = .01</span></li>
+<li>Ply: <span class="math inline"><em>μ</em> = 2.5, <em>σ</em> = 1.64</span></li>
+<li>CDT: <span class="math inline"><em>μ</em> = 8.83, <em>σ</em> = 4.167</span></li>
+</ul></li>
+<li>Overall 50% faster (not statistically significant, likely due to small <span class="math inline"><em>n</em></span>)
+<ul>
+<li><span class="math inline"><em>t</em>(10) =  − 2.4, <em>p</em> = .06</span></li>
+<li>Ply: <span class="math inline"><em>μ</em> = 16.67, <em>σ</em> = 1.63</span></li>
+<li>CDT: <span class="math inline"><em>μ</em> = 24.83, <em>σ</em> = 8.08</span></li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="study-2-conceptual-learning" class="slide level2">
+<h2>Study 2: Conceptual learning</h2>
+<div class="framed">
+<p>How does embedded guidance help novice developers learn new CSS concepts?</p>
+</div>
+</section>
+<section id="setup-1" class="slide level2">
+<h2>Setup</h2>
+<ul>
+<li><span class="math inline"><em>n</em> = 5</span> inexperienced users</li>
+<li>Pre- and post-tests</li>
+<li>Implicit dependencies and visual subtypes (see paper)</li>
+</ul>
+<figure>
+<img data-src="img/study2-oscar.png" alt="Oscar" /><figcaption>Oscar</figcaption>
+</figure>
+<aside class="notes">
+<p>Following standard measures of learning gain, we asked participants to perform a similar task before and after performing the intervention so we could track the change in their understanding.</p>
+</aside>
+</section>
+<section id="novices-could-identify-dependencies" class="slide level2">
+<h2>Novices could identify dependencies</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">.header</span> {</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw">position</span>: <span class="dv">fixed</span>;</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="kw">z-index</span>: <span class="dv">300</span>;</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">}</a></code></pre></div>
+<ul>
+<li>Before: <strong>0 out of 5</strong> identified dependency between <code>z-index</code> and <code>position</code></li>
+<li>After: <strong>5 out of 5</strong></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<blockquote>
+<p>“Something about <code>z-index</code> would change as a result of <code>position</code> not being fixed. <code>position: fixed;</code> is <strong>doing something beyond pinning in place</strong> while you scroll.”</p>
+</blockquote>
+<aside class="notes">
+<p>TODO: What’s more exciting is that they could explain why this was happening</p>
+</aside>
+</section>
+<section id="takeaways" class="slide level2">
+<h2>Takeaways</h2>
+<ul>
+<li><p>Production webpages can support <strong>authentic learning</strong></p></li>
+<li><p>CSS is nontrivial to understand – need <strong>semantic tools</strong> that support <strong>visual intuition</strong></p></li>
+</ul>
+<div class="framed">
+<p>Learner-centered developer tools</p>
+</div>
+</section>
+<section id="ply-visual-web-inspection" class="slide level2">
+<h2>Ply: Visual Web Inspection</h2>
+<ul>
+<li><a href="mailto:sarah@sarahlim.com" class="email">sarah@sarahlim.com</a></li>
+<li><a href="http://twitter.com/soylentqueen">@soylentqueen</a></li>
+<li><a href="http://github.com/sarahlim/ply" class="uri">http://github.com/sarahlim/ply</a></li>
+</ul>
+<p><img data-src="img/ply/end.png" style="width: 70%; margin-bottom: 30px;" /></p>
+<p><img data-src="img/nsf.png" alt="NSF" style="width: 150px; position: absolute; bottom: 0; left: 0; transform: translate(25%, 25%);" /> <img data-src="img/delta_logo.png" alt="Delta" style="width: 250px;position: absolute; bottom: 0; left: 50%; transform: translate(-50%, -25%);" /> <img data-src="img/nu-eecs.png" alt="Northwestern" style="width: 250px; position: absolute; bottom: 0; right: 0;" /></p>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+        height: 850,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
