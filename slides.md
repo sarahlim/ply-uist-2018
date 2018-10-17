@@ -122,13 +122,11 @@ vs.
 
 
 :::notes
-TODO: Shorter
+But another problem is that tutorials often don't reflect up-to-date best practices.
 
-Moreover, these implementations are actually quite different.
+The Airbnb example uses `display: table;` to achieve a tabular layout without using a semantically-incorrect `<table>` element.
 
-The Airbnb example uses `display: table;` to achieve tabular layout behaviour without actually using a `<table>` element.
-
-The toy example uses floats and clearfix, which is an outdated way of achieving a column layout and doesn't reflect modern best practices.
+The toy example uses floats and clearfix, which is a pretty outdated approach to layout.
 :::
 
 
@@ -138,9 +136,9 @@ The toy example uses floats and clearfix, which is an outdated way of achieving 
 
 
 :::notes
-Now if you're an expert, you can just use the "Inspect Element" feature built into modern browser devtools to inspect the actual DOM and CSS used to construct the page.
+Now experts know this, so they often use the "Inspect Element" feature built into modern browser devtools to inspect the underlying implementation.
 
-And experts perform this sort of debugging and inspection quite frequently, to understand how other webpages implement effects using modern development best practices that tutorials don't always convey.
+how other webpages implement effects using modern development best practices that tutorials don't always convey.
 :::
 
 ## But tools are overwhelming for novices
@@ -156,9 +154,7 @@ And experts perform this sort of debugging and inspection quite frequently, to u
 
 
 :::notes
-Unfortunately, if you're relatively new to web design and you only know basic HTML and CSS syntax but not development practices, the output of the inspector is pretty overwhelming for any nontrivial webpage.
-
-
+But lots of information, hard to understand what's going on
 :::
 
 
@@ -205,7 +201,7 @@ More details in paper
 :::
 
 
-## Novices rely on [visual intuition]{style="color: blue;"}, but existing inspection tools do not support reasoning visually about unfamiliar code.
+## Novices rely on [visual intuition]{style="color: #0079ff;"}, but existing inspection tools do not support reasoning visually about unfamiliar code.
 
 . . .
 
@@ -215,16 +211,16 @@ In line with @Gross:2010:TTF:1937117.1937123, @JoelBrandt:2010ula, @Ko:2004td
 ::: notes
 Our high-level finding was that novices rely heavily on their visual intuition to comprehend unfamiliar CSS, and struggle to relate visual outcomes to responsible lines of code.
 
-...
+This is consistent with prior work that end user programmers struggle to identify the lines of code responsible for graphical outputs of interest.
 
-This is consistent with previous work on novice and end-user programming in environments with graphical output, but I want to talk about two core obstacles we identified in the context of CSS inspection.
+In particular, I want to talk about two core obstacles we identified in the context of CSS inspection.
 :::
 
 
 ## Problem 1: Visually ineffective properties
 
 
-## Here's what you'd expect
+## Effective properties
 
 ![Toggling properties with effects](img/effective-one.gif)
 
@@ -234,7 +230,7 @@ So first, if you've used Chrome DevTools you probably know that you can click a 
 :::
 
 
-## Here's what actually happens
+## Ineffective properties
 
 ![Toggling is a no-op](img/ineffective-all.gif){.captioned}
 
@@ -269,7 +265,6 @@ The problem is that even though Chrome crosses off properties that it knows are 
 
 
 ::: {.column .middle width=50%}
-
 - Style guides, component libraries
 - Responsive breakpoints (`@media` queries)
 - Interaction states
@@ -278,13 +273,13 @@ The problem is that even though Chrome crosses off properties that it knows are 
 
 
 :::notes
-This would be fine if it were only one or two, but tragically, it is not
-
-These properties exist for a few reasons
+This would be fine if it were only one or two, but tragically, there are a lot -- the red highlights are properties that are visually ineffective but appear relevant in Chrome -- and you can see that it's pushed the relevant properties in green to the bottom of the fold.
 
 As we observed in needfinding, when relevant code was pushed below the fold, it was hard for novices to find
 
-But even if you were to remove all the ineffective properties, our needfinding suggests that's not enough
+These properties exist for a few reasons. Production webpages often use styleguides
+
+But even if you were to remove all the ineffective properties...
 :::
 
 
@@ -292,7 +287,6 @@ But even if you were to remove all the ineffective properties, our needfinding s
 
 :::notes
 But even if you removed these it's not enough -- we also found in needfinding that novices lacked conceptual knowledge that prevented them from making sense of unfamiliar example code.
-
 
 In particular, novices struggled to understand how multiple properties work together to produce visual outcomes.
 
@@ -315,7 +309,7 @@ An example of this is implicit dependencies.
   }
 
   .example-1 .blue {
-    color: blue;
+    color: #0079ff;
     font-size: 2em;
     display: table;
   }
@@ -323,7 +317,7 @@ An example of this is implicit dependencies.
   .example-1 .red {
     width: 75px;
     height: 150px;
-    background: rgba(255,0,0,0.75);
+    background: #ff3d38;
   }
   
   .example-1 .red {
@@ -366,7 +360,7 @@ An example of this is implicit dependencies.
   }
 
   .example-2 .blue {
-    color: blue;
+    color: #0079ff;
     font-size: 2em;
     display: table;
   }
@@ -374,7 +368,7 @@ An example of this is implicit dependencies.
   .example-2 .red {
     width: 75px;
     height: 150px;
-    background: rgba(255,0,0,0.75);
+    background: #ff3d38;
   }
   
   .example-2 .red {
@@ -431,9 +425,9 @@ It might seem like these are independent properties, but alas
 
 ## Designing a learner-friendly web inspector
 
-1. **Hide visually-irrelevant code** to minimize information overload and support novices' visual intuition
+1. [Hide visually-irrelevant code]{style="color: #0079ff;"} to minimize information overload and support novices' visual intuition
 
-2. **Embed contextual guidance** into inspector output to explain how properties coordinate
+2. [Embed contextual guidance]{style="color: #0079ff;"} into inspector output to explain how properties coordinate
 
 Building from @Quintana:2004bg
 
@@ -468,7 +462,7 @@ Their guidelines are:
 ![Ply teaser screenshot](img/ply/overview.png)
 
 
-## Pruning ineffective properties
+## 1. Pruning ineffective properties
 
 
 :::::: columns
@@ -482,7 +476,7 @@ Their guidelines are:
 ::::::
 
 
-## Pruning ineffective properties
+## 1. Pruning ineffective properties
 
 
 :::::: columns
@@ -498,7 +492,7 @@ Their guidelines are:
 ::::::
 
 
-## Pruning ineffective properties
+## 1. Pruning ineffective properties
 
 
 :::::: columns
@@ -521,17 +515,17 @@ When you click this Prune button, it greys out all the visually-ineffective prop
 :::
 
 
-## Computing dependencies
+## 2. Computing dependencies
 
 ![Show dependencies](img/ply/deps-show.png){.shadowed}
 
 
-## Computing dependencies
+## 2. Computing dependencies
 
 ![Hide dependencies](img/ply/deps-hide.png){.shadowed}
 
 
-## Computing dependencies
+## 2. Computing dependencies
 
 ![Hover dependencies](img/ply/deps-hover.png){.shadowed}
 
@@ -546,10 +540,15 @@ When you click this Prune button, it greys out all the visually-ineffective prop
 Using annotations to surface design patterns (see paper)
 
 
-## Demo
+---
 
 
-<video controls muted src="img/ply/demo.mp4"></video>
+
+<video id="demo" controls muted src="img/ply/demo.mp4"></video>
+<script type="text/javascript">
+const demo = document.getElementById('demo');
+demo.playbackRate = 1.5;
+</script>
 
 
 ::: notes
@@ -562,7 +561,9 @@ Here's how it actually works in practice
 
 ## Inspiration: Visual regression testing
 
-![Source: [Todd Wolfson](https://twolfson.com/2014-02-25-visual-regression-testing-in-travis-ci)](img/regression-testing.png){.captioned}
+1. Capture original screenshots
+2. Make changes to codebase
+3. Test for differences ([visual regressions]{style="color: #ff3d38;"}) in output 
 
 
 :::notes
@@ -578,7 +579,7 @@ Our approach is inspired by a technique called visual regression testing, which 
 
 ## Key idea
 
-A property is **visually effective** if and only if its <del>deletion</del> causes a [regression]{style="color: red;"}
+A property is **visually effective** if and only if its deletion causes a [regression]{style="color: #ff3d38;"}
 
 
 ::: notes
@@ -618,14 +619,14 @@ $\implies \quad$ `display: block;` is **ineffective**
 :::
 
 
-## Implicit dependencies
+## Dependency satisfied
 
-![Dependency satisfied](img/deps-satisfied.gif){.captioned}
+![Dependency satisfied](img/deps-satisfied.gif)
 
 
-## Implicit dependencies
+## Dependency missing
 
-![Dependency missing](img/deps-missing.gif){.captioned}
+![Dependency missing](img/deps-missing.gif)
 
 
 
@@ -636,6 +637,11 @@ This seems like simple visual comparisons, but it allows us to help a novice und
 ---
 
 <h2 class="h1">Evaluation</h2>
+
+
+::: notes
+So now I will share how well this works.
+:::
 
 ---
 
@@ -663,6 +669,8 @@ Does pruning ineffective properties help developers replicate features more quic
 
 
 ::: notes
+Meaningful differences for novices
+
 - Ply users 3.5 times faster to first milestone
   - $t(10) = -3.5, p = .01$
   - Ply: $\mu = 2.5, \sigma = 1.64$
@@ -693,6 +701,11 @@ How does embedded guidance help novice developers learn new CSS concepts?
 ![Oscar](img/study2-oscar.png)
 
 
+::: notes
+Following standard measures of learning gain, we asked participants to perform a similar task before and after performing the intervention so we could track the change in their understanding.
+:::
+
+
 ## Novices could identify dependencies
 
 ```css
@@ -706,9 +719,9 @@ How does embedded guidance help novice developers learn new CSS concepts?
 - After: **5 out of 5**
 
 
-## Sense-making
+---
 
-> Something about `z-index` would change as a result of `position` not being fixed. `position: fixed;` is **doing something beyond pinning in place** while you scroll
+> "Something about `z-index` would change as a result of `position` not being fixed. `position: fixed;` is **doing something beyond pinning in place** while you scroll."
 
 
 ::: notes
@@ -719,34 +732,27 @@ TODO: What's more exciting is that they could explain why this was happening
 ## Takeaways
 
 - Production webpages can support **authentic learning**
-- Static designs are nontrivial to implement -- need **semantic tools** that **fit novices' mental models**
+
+- CSS is nontrivial to understand -- need **semantic tools** that support **visual intuition**
 
 
-::: framed
-Learner-centered developer tooling
+::: {.framed}
+Learner-centered developer tools
 :::
 
 
-## More in the paper
-
-- Background: sense-making, authentic learning
-- Visual subtypes
-- Many more examples
+## Ply: Visual Web Inspection
 
 
-## Thanks
-
-- NSF logo
-- Delta logo
-- Northwestern logo
+- <sarah@sarahlim.com>
+- [\@soylentqueen](http://twitter.com/soylentqueen)
+- <http://github.com/sarahlim/ply>
 
 
-::: framed
-<sarah@sarahlim.com>
-
-Twitter: [\@soylentqueen](http://twitter.com/soylentqueen)
-:::
+![](img/ply/end.png){style="width: 70%; margin-bottom: 30px;"}
 
 
-![Ply](img/ply/end.png){width=70%}
+![NSF](img/nsf.png){style="width: 150px; position: absolute; bottom: 0; left: 0; transform: translate(25%, 25%);"}
+![Delta](img/delta_logo.png){style="width: 250px;position: absolute; bottom: 0; left: 50%; transform: translate(-50%, -25%);"}
+![Northwestern](img/nu-eecs.png){style="width: 250px; position: absolute; bottom: 0; right: 0;"}
 
