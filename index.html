@@ -9,17 +9,18 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reset.css">
   <link rel="stylesheet" href="reveal.js/css/reveal.css">
-  <style type="text/css">
+  <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+  <style>
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -29,14 +30,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -45,9 +48,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -107,7 +110,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="modern-web-design-is-complex-and-hard-to-learn" class="slide level2">
 <h2>Modern web design is complex and hard to learn</h2>
 <figure>
-<img data-src="img/airbnb.png" alt="Source: Airbnb homepage" class="captioned" /><figcaption>Source: Airbnb homepage</figcaption>
+<img data-src="img/airbnb.png" class="captioned" alt="" /><figcaption>Source: Airbnb homepage</figcaption>
 </figure>
 <aside class="notes">
 <p>Modern webpages are complex, full-featured applications with really impressive designs, and there are a lot of people interested in learning to style these rich interfaces.</p>
@@ -117,7 +120,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="how-do-i-make-a-form-like-this" class="slide level2">
 <h2>“How do I make a form like this?”</h2>
 <figure>
-<img data-src="img/airbnb-bar.png" alt="Airbnb booking bar component" /><figcaption>Airbnb booking bar component</figcaption>
+<img data-src="img/airbnb-bar.png" alt="" /><figcaption>Airbnb booking bar component</figcaption>
 </figure>
 <aside class="notes">
 <p>And so let’s say I come across this example from the Airbnb homepage, and I’d like to replicate this booking form here.</p>
@@ -127,7 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="tutorials-may-be-hard-to-find" class="slide level2">
 <h2>Tutorials may be hard to find</h2>
 <figure>
-<img data-src="img/codrops-search.png" alt="Source: Codrops.com" class="captioned shadowed" /><figcaption>Source: Codrops.com</figcaption>
+<img data-src="img/codrops-search.png" class="captioned shadowed" alt="" /><figcaption>Source: Codrops.com</figcaption>
 </figure>
 <aside class="notes">
 <p>So one thing you can do is to search for tutorials on a websites like CSSTricks or Codrops.</p>
@@ -142,11 +145,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="tutorials-arent-quite-right" class="slide level2">
 <h2>Tutorials aren’t quite right</h2>
 <figure>
-<img data-src="img/airbnb-bar.png" alt="Airbnb booking bar component" /><figcaption>Airbnb booking bar component</figcaption>
+<img data-src="img/airbnb-bar.png" alt="" /><figcaption>Airbnb booking bar component</figcaption>
 </figure>
 <p>vs.</p>
 <figure>
-<img data-src="img/codepen.png" alt="Source: Codepen" class="shadowed captioned" /><figcaption>Source: <a href="https://codepen.io/andiio/pen/tFECp?editors=1100">Codepen</a></figcaption>
+<img data-src="img/codepen.png" class="shadowed captioned" alt="" /><figcaption>Source: <a href="https://codepen.io/andiio/pen/tFECp?editors=1100">Codepen</a></figcaption>
 </figure>
 <aside class="notes">
 <p>But the biggest problem is that tutorials are often <em>too simplistic</em> and not exactly what we’re looking for.</p>
@@ -158,24 +161,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="columns">
 <div class="column" style="position: relative; top: 50%; left: 0; transform: translateY(25%);" style="width:50%;">
 <figure>
-<img data-src="img/airbnb-bar.png" alt="Tabular display" class="captioned" /><figcaption>Tabular display</figcaption>
+<img data-src="img/airbnb-bar.png" class="captioned" alt="" /><figcaption>Tabular display</figcaption>
 </figure>
 </div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb1"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">.container</span> {</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">display</span>: <span class="dv">table</span>;</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">.container</span> {</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">display</span>: <span class="dv">table</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>}</span></code></pre></div>
 </div>
 </div>
 <p>vs.</p>
 <div class="columns">
 <div class="column" style="position: relative; top: 50%; left: 0;" style="width:50%;">
 <figure>
-<img data-src="img/codepen-zoom.png" alt="Floats" class="captioned" /><figcaption>Floats</figcaption>
+<img data-src="img/codepen-zoom.png" class="captioned" alt="" /><figcaption>Floats</figcaption>
 </figure>
 </div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb2"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">.container</span> {</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">float</span>: <span class="dv">left</span>;</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">.container</span> {</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw">float</span>: <span class="dv">left</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>}</span></code></pre></div>
 </div>
 </div>
 <aside class="notes">
@@ -187,7 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="any-webpage-can-be-inspected" class="slide level2">
 <h2>Any webpage can be inspected…</h2>
 <figure>
-<img data-src="img/airbnb-cdt.png" alt="Inspecting the Airbnb homepage in CDT" /><figcaption>Inspecting the Airbnb homepage in CDT</figcaption>
+<img data-src="img/airbnb-cdt.png" alt="" /><figcaption>Inspecting the Airbnb homepage in CDT</figcaption>
 </figure>
 <aside class="notes">
 <p>Now experts know this, so they often use the “Inspect Element” feature built into modern browser devtools to inspect the underlying implementation.</p>
@@ -198,7 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>But tools are overwhelming for novices</h2>
 <div class="annotated">
 <figure>
-<img data-src="img/airbnb-cdt-only.png" alt="Focusing on Airbnb CSS" class="shadowed" /><figcaption>Focusing on Airbnb CSS</figcaption>
+<img data-src="img/airbnb-cdt-only.png" class="shadowed" alt="" /><figcaption>Focusing on Airbnb CSS</figcaption>
 </figure>
 <div class="annotation right top" style="width: 30%; height: 78%;">
 
@@ -267,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="effective-properties" class="slide level2">
 <h2>Effective properties</h2>
 <figure>
-<img data-src="img/effective-one.gif" alt="Toggling properties with effects" /><figcaption>Toggling properties with effects</figcaption>
+<img data-src="img/effective-one.gif" alt="" /><figcaption>Toggling properties with effects</figcaption>
 </figure>
 <aside class="notes">
 <p>So first, if you’ve used Chrome DevTools you probably know that you can click a property to toggle it on and off, live on the page.</p>
@@ -276,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="ineffective-properties" class="slide level2">
 <h2>Ineffective properties</h2>
 <figure>
-<img data-src="img/ineffective-all.gif" alt="Toggling is a no-op" class="captioned" /><figcaption>Toggling is a no-op</figcaption>
+<img data-src="img/ineffective-all.gif" class="captioned" alt="" /><figcaption>Toggling is a no-op</figcaption>
 </figure>
 <aside class="notes">
 <p>The problem is that even though Chrome crosses off properties that it knows are inactive, there are <em>still</em> properties left that can be toggled without changing the page’s appearance.</p>
@@ -288,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="column middle" style="width:50%;">
 <div class="annotated">
 <figure>
-<img data-src="img/airbnb-cdt-css.png" alt="✗ = ineffective" class="captioned" /><figcaption>✗ = ineffective</figcaption>
+<img data-src="img/airbnb-cdt-css.png" class="captioned" alt="" /><figcaption>✗ = ineffective</figcaption>
 </figure>
 <div class="annotation filled" style="width: 80%; height: 13%; top: 22%; left: 5%;">
 <p><span style="position: absolute; top: 50%; right: 100%; transform: translate(-50%, -50%); color: red;">✗</span></p>
@@ -366,9 +369,9 @@ Hello
 </style>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb3"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">.blue</span> {</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">z-index</span>: <span class="dv">300</span>;</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">.blue</span> {</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="kw">z-index</span>: <span class="dv">300</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>}</span></code></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -411,10 +414,10 @@ Hello
 </style>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb4"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">.blue</span> {</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw">z-index</span>: <span class="dv">300</span>;</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="kw">position</span>: <span class="dv">relative</span>;</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">.blue</span> {</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="kw">z-index</span>: <span class="dv">300</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="kw">position</span>: <span class="dv">relative</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>}</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -450,14 +453,14 @@ Hello
 <p>Their guidelines are:</p>
 <ol type="1">
 <li><p>Use representations and language that bridge learners’ understanding (which in our case is visual intuition)</p></li>
-<li>Embed expert guidance into the sense-making process to provide missing domain knowledge</li>
+<li><p>Embed expert guidance into the sense-making process to provide missing domain knowledge</p></li>
 </ol>
 </aside>
 </section>
 <section id="ply-a-dom-and-css-inspector" class="slide level2">
 <h2>Ply: a DOM and CSS inspector</h2>
 <figure>
-<img data-src="img/ply/overview.png" alt="Ply teaser screenshot" /><figcaption>Ply teaser screenshot</figcaption>
+<img data-src="img/ply/overview.png" alt="" /><figcaption>Ply teaser screenshot</figcaption>
 </figure>
 </section>
 <section id="pruning-ineffective-properties" class="slide level2">
@@ -465,7 +468,7 @@ Hello
 <div class="columns">
 <div class="column" style="width:50%;">
 <figure>
-<img data-src="img/ply/pruning-before.png" alt="Before" class="captioned" /><figcaption>Before</figcaption>
+<img data-src="img/ply/pruning-before.png" class="captioned" alt="" /><figcaption>Before</figcaption>
 </figure>
 </div><div class="column" style="width:50%;">
 
@@ -477,7 +480,7 @@ Hello
 <div class="columns">
 <div class="column annotated" style="width:50%;">
 <figure>
-<img data-src="img/ply/pruning-before.png" alt="Before" class="captioned" /><figcaption>Before</figcaption>
+<img data-src="img/ply/pruning-before.png" class="captioned" alt="" /><figcaption>Before</figcaption>
 </figure>
 <div class="annotation" style="top: 50px; right: 3%; height: 35px; width: 20%;">
 
@@ -492,11 +495,11 @@ Hello
 <div class="columns">
 <div class="column" style="width:50%;">
 <figure>
-<img data-src="img/ply/pruning-before.png" alt="Before" class="captioned" style="opacity: 0.4;" /><figcaption>Before</figcaption>
+<img data-src="img/ply/pruning-before.png" class="captioned" style="opacity: 0.4;" alt="" /><figcaption>Before</figcaption>
 </figure>
 </div><div class="column" style="width:50%;">
 <figure>
-<img data-src="img/ply/pruning-after.png" alt="After" class="captioned" /><figcaption>After</figcaption>
+<img data-src="img/ply/pruning-after.png" class="captioned" alt="" /><figcaption>After</figcaption>
 </figure>
 </div>
 </div>
@@ -507,24 +510,24 @@ Hello
 <section id="computing-dependencies" class="slide level2">
 <h2>2. Computing dependencies</h2>
 <figure>
-<img data-src="img/ply/deps-show.png" alt="Show dependencies" class="shadowed" /><figcaption>Show dependencies</figcaption>
+<img data-src="img/ply/deps-show.png" class="shadowed" alt="" /><figcaption>Show dependencies</figcaption>
 </figure>
 </section>
 <section id="computing-dependencies-1" class="slide level2">
 <h2>2. Computing dependencies</h2>
 <figure>
-<img data-src="img/ply/deps-hide.png" alt="Hide dependencies" class="shadowed" /><figcaption>Hide dependencies</figcaption>
+<img data-src="img/ply/deps-hide.png" class="shadowed" alt="" /><figcaption>Hide dependencies</figcaption>
 </figure>
 </section>
 <section id="computing-dependencies-2" class="slide level2">
 <h2>2. Computing dependencies</h2>
 <figure>
-<img data-src="img/ply/deps-hover.png" alt="Hover dependencies" class="shadowed" /><figcaption>Hover dependencies</figcaption>
+<img data-src="img/ply/deps-hover.png" class="shadowed" alt="" /><figcaption>Hover dependencies</figcaption>
 </figure>
 </section>
 <section id="visual-subtypes" class="slide level2">
 <h2>Visual subtypes</h2>
-<p><img data-src="img/study2-indiegogo.png" alt="Indiegogo" /> <img data-src="img/ply/subtypes.png" alt="Visual subtypes" class="shadowed" /></p>
+<p><img data-src="img/study2-indiegogo.png" alt="Indiegogo" /> <img data-src="img/ply/subtypes.png" class="shadowed" alt="Visual subtypes" /></p>
 <p>Using annotations to surface design patterns (see paper)</p>
 </section>
 <section class="slide level2">
@@ -574,16 +577,16 @@ Visual Relevance Testing
 <section class="slide level2">
 
 <figure>
-<img data-src="img/vrt-before.png" alt="Original" class="captioned" /><figcaption>Original</figcaption>
+<img data-src="img/vrt-before.png" class="captioned" alt="" /><figcaption>Original</figcaption>
 </figure>
 <div class="fragment">
 <figure>
-<img data-src="img/vrt-after.png" alt="Disable width: 100%;" class="captioned" /><figcaption>Disable <code>width: 100%;</code></figcaption>
+<img data-src="img/vrt-after.png" class="captioned" alt="" /><figcaption>Disable <code>width: 100%;</code></figcaption>
 </figure>
 </div>
 <div class="fragment">
 <figure>
-<img data-src="img/vrt-diff.png" alt="Visual regression" class="captioned" /><figcaption>Visual regression</figcaption>
+<img data-src="img/vrt-diff.png" class="captioned" alt="" /><figcaption>Visual regression</figcaption>
 </figure>
 <div class="framed">
 <p><span class="math inline">⟹ </span> <code>width: 100%;</code> is <strong>effective</strong></p>
@@ -593,11 +596,11 @@ Visual Relevance Testing
 <section class="slide level2">
 
 <figure>
-<img data-src="img/vrt-before.png" alt="Original" class="captioned" /><figcaption>Original</figcaption>
+<img data-src="img/vrt-before.png" class="captioned" alt="" /><figcaption>Original</figcaption>
 </figure>
 <div class="fragment">
 <figure>
-<img data-src="img/vrt-before.png" alt="Disable display: block;" class="captioned" /><figcaption>Disable <code>display: block;</code></figcaption>
+<img data-src="img/vrt-before.png" class="captioned" alt="" /><figcaption>Disable <code>display: block;</code></figcaption>
 </figure>
 </div>
 <div class="fragment">
@@ -609,13 +612,13 @@ Visual Relevance Testing
 <section id="dependency-satisfied" class="slide level2">
 <h2>Dependency satisfied</h2>
 <figure>
-<img data-src="img/deps-satisfied.gif" alt="Dependency satisfied" /><figcaption>Dependency satisfied</figcaption>
+<img data-src="img/deps-satisfied.gif" alt="" /><figcaption>Dependency satisfied</figcaption>
 </figure>
 </section>
 <section id="dependency-missing" class="slide level2">
 <h2>Dependency missing</h2>
 <figure>
-<img data-src="img/deps-missing.gif" alt="Dependency missing" /><figcaption>Dependency missing</figcaption>
+<img data-src="img/deps-missing.gif" alt="" /><figcaption>Dependency missing</figcaption>
 </figure>
 <aside class="notes">
 <p>This seems like simple visual comparisons, but it allows us to help a novice understand the example by surfacing the conceptual knowledge about relationships between properties that they didn’t know beforehand.</p>
@@ -643,7 +646,7 @@ Evaluation
 <li>40 minutes, three milestones</li>
 </ul>
 <figure>
-<img data-src="img/ideo-browser.png" alt="Ideo" /><figcaption>Ideo</figcaption>
+<img data-src="img/ideo-browser.png" alt="" /><figcaption>Ideo</figcaption>
 </figure>
 </section>
 <section id="learners-were-faster-with-ply" class="slide level2">
@@ -656,7 +659,7 @@ Evaluation
 </ul></li>
 </ul>
 <figure>
-<img data-src="img/milestones.png" alt="Milestones" /><figcaption>Milestones</figcaption>
+<img data-src="img/milestones.png" alt="" /><figcaption>Milestones</figcaption>
 </figure>
 <aside class="notes">
 <p>Meaningful differences for novices</p>
@@ -690,7 +693,7 @@ Evaluation
 <li>Implicit dependencies and visual subtypes (see paper)</li>
 </ul>
 <figure>
-<img data-src="img/study2-oscar.png" alt="Oscar" /><figcaption>Oscar</figcaption>
+<img data-src="img/study2-oscar.png" alt="" /><figcaption>Oscar</figcaption>
 </figure>
 <aside class="notes">
 <p>Following standard measures of learning gain, we asked participants to perform a similar task before and after performing the intervention so we could track the change in their understanding.</p>
@@ -698,10 +701,10 @@ Evaluation
 </section>
 <section id="novices-could-identify-dependencies" class="slide level2">
 <h2>Novices could identify dependencies</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">.header</span> {</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw">position</span>: <span class="dv">fixed</span>;</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="kw">z-index</span>: <span class="dv">300</span>;</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">.header</span> {</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="kw">position</span>: <span class="dv">fixed</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="kw">z-index</span>: <span class="dv">300</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>}</span></code></pre></div>
 <ul>
 <li>Before: <strong>0 out of 5</strong> identified dependency between <code>z-index</code> and <code>position</code></li>
 <li>After: <strong>5 out of 5</strong></li>
@@ -729,17 +732,16 @@ Evaluation
 <section id="ply-visual-web-inspection" class="slide level2">
 <h2>Ply: Visual Web Inspection</h2>
 <ul>
-<li><a href="mailto:sarah@sarahlim.com" class="email">sarah@sarahlim.com</a></li>
-<li><a href="http://twitter.com/soylentqueen">@soylentqueen</a></li>
-<li><a href="http://github.com/sarahlim/ply" class="uri">http://github.com/sarahlim/ply</a></li>
+<li><a href="mailto:slim@sarahlim.com" class="email">slim@sarahlim.com</a></li>
+<li><a href="http://twitter.com/sliminality">@sliminality</a></li>
+<li><a href="http://github.com/sliminality/ply" class="uri">http://github.com/sliminality/ply</a></li>
 </ul>
 <p><img data-src="img/ply/end.png" style="width: 70%; margin-bottom: 30px;" /></p>
-<p><img data-src="img/nsf.png" alt="NSF" style="width: 150px; position: absolute; bottom: 0; left: 0; transform: translate(25%, 25%);" /> <img data-src="img/delta_logo.png" alt="Delta" style="width: 250px;position: absolute; bottom: 0; left: 50%; transform: translate(-50%, -25%);" /> <img data-src="img/nu-eecs.png" alt="Northwestern" style="width: 250px; position: absolute; bottom: 0; right: 0;" /></p>
+<p><img data-src="img/nsf.png" style="width: 150px; position: absolute; bottom: 0; left: 0; transform: translate(25%, 25%);" alt="NSF" /> <img data-src="img/delta_logo.png" style="width: 250px;position: absolute; bottom: 0; left: 50%; transform: translate(-50%, -25%);" alt="Delta" /> <img data-src="img/nu-eecs.png" style="width: 250px; position: absolute; bottom: 0; right: 0;" alt="Northwestern" /></p>
 </section>
     </div>
   </div>
 
-  <script src="reveal.js/lib/js/head.min.js"></script>
   <script src="reveal.js/js/reveal.js"></script>
 
   <script>

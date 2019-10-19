@@ -7,8 +7,8 @@ author:
 date: UIST 2018, Berlin
 
 bibliography:
-  - /Users/sarah/Dropbox/Study/uist2018/talk/citations.bib
-  - /Users/sarah/Dropbox/Study/uist2018/talk/rale.bib
+  - /Users/slim/Dropbox/Study/uist2018/talk/citations.bib
+  - /Users/slim/Dropbox/Study/uist2018/talk/rale.bib
 suppress-bibliography: true
 
 theme: slim
@@ -744,9 +744,9 @@ Learner-centered developer tools
 ## Ply: Visual Web Inspection
 
 
-- <sarah@sarahlim.com>
-- [\@soylentqueen](http://twitter.com/soylentqueen)
-- <http://github.com/sarahlim/ply>
+- <slim@sarahlim.com>
+- [\@sliminality](http://twitter.com/sliminality)
+- <http://github.com/sliminality/ply>
 
 
 ![](img/ply/end.png){style="width: 70%; margin-bottom: 30px;"}
