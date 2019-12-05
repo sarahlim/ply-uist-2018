@@ -29,7 +29,7 @@
   --caption-color: #787878;
 
   --serif-stack: "PT Serif", "Calluna", "Arno Pro", serif;
-  --sans-serif-stack: "Average Sans", sans-serif;
+  --sans-serif-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', 'Segoe UI', sans-serif;
   --monospace-stack: "Fira Code", Inconsolata, Menlo, Courier, monospace;
 
   --body-font: var(--sans-serif-stack);
